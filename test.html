@@ -20,15 +20,29 @@
     flex-direction: column;
   }
 
-  #hearts {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 999;
+  .heart-particle {
+  position: absolute;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+  clip-path: path('M10 3.22l-.61-.6C7.4 1.13 4.26 1.77 3 3.84 1.27 6.46 2.07 10.29 5.5 13.56l4.5 4.5 4.5-4.5c3.43-3.27 4.23-7.1 2.5-9.72-1.26-2.07-4.4-2.71-6.39-1.22l-.61.6z');
+  animation-name: floatHeart;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+@keyframes floatHeart {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
   }
+  to {
+    transform: translateY(105vh) rotate(360deg);
+    opacity: 0;
+  }
+}
 
   .heart {
      position: absolute;
@@ -295,22 +309,19 @@ p:hover {
     </div>
     <button class="next-button" id="nextButton">Back</button>
   <script>
-    function createHeart() {
-    const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.style.left = Math.random() * window.innerWidth + 'px';
-  heart.style.top = Math.random() * window.innerHeight + 'px';
+     function createHeartEffects() {
+    if (document.querySelector('.heart-particle')) return;
 
-  const container = document.getElementById('hearts');
-  container.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 2000); 
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.animationDelay = `${Math.random() * 8}s`;
+      heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
+      heart.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, ${Math.random() * 20 + 60}%)`;
+      document.body.appendChild(heart);
+    }
   }
-
-  setInterval(createHeart, 200);
-
   function applyWordTypingAnimation() {
     const paragraphs = document.querySelectorAll('.letter p:not(.signature)');
     let totalDelay = 2;
@@ -350,7 +361,7 @@ p:hover {
   });
 
   window.onload = function () {
-    createHeart();
+    createHeartEffects();
     applyWordTypingAnimation();
     setTimeout(() => {
       envelope.classList.remove('closed');
