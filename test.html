@@ -301,11 +301,12 @@ p:hover {
                 <p>Anyway I wish you happier</p>
                 <p>No matter what you will always be my angel </p>
                 <p>(In every lifetime)</p>
-                <p>Happy birthday💕<333</p>
+               <p>Happy birthday💕</p>
                 <p class="signature" id="signature">Long<br>Vu Gia Long</p>
             </div>
         </div>
         <img src="./images/md.gif" alt="" style="width: 260px;">
+    <audio id="birthday-audio" src="ndtd.mp3" preload="auto"></audio>
     </div>
     <button class="next-button" id="nextButton">Back</button>
   <script>
@@ -359,6 +360,10 @@ p:hover {
   document.getElementById('nextButton').addEventListener('click', function () {
     window.location.href = 'index.html';
   });
+  const birthdayAudio = document.getElementById('birthday-audio');
+    birthdayAudio.play().catch((error) => {
+        console.error('Error playing audio:', error);
+    });
 
   window.onload = function () {
     createHeartEffects();
